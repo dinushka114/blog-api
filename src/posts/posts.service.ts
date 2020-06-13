@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@nestjs/common";
 import { Model } from "mongoose";
 import { Posts } from "./interfaces/posts.interface";
 import { createPostDto } from "../posts/dtos/posts.dto";
+import {uuid} from 'uuidv4';
 
 @Injectable()
 export class PostsService {
@@ -11,6 +12,8 @@ export class PostsService {
     const posts = await this.postModel.find();
     return posts;
   }
+
+
 
   async findOnePost(id: String): Promise<Posts> {
     const post = await this.postModel.findById(id);
@@ -23,6 +26,7 @@ export class PostsService {
     const dateCreate =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     const newPost = {
+      postId:uuid(),
       title: title,
       description: description,
       body: body,
